@@ -1,0 +1,5 @@
+BookingID,EntryID,NameFirst,NameLast,Email,DOB,ID1,RoomLocation,RoomSpace,RoomType,Beds,CheckInDate,CheckOutDate,EntryStatus,WeeklyRate,TermSession
+50001,9001,Example,Resident One,one@example.com,2007-03-14,S9001,Harbour Hall,HH-201,Single Room,1,2027-02-20,2027-11-20,Reserved,305.00,Academic Year 2027
+50002,9002,Example,Resident Two,two@example.com,2006-11-02,S9002,Harbour Hall,HH-202,Twin Room,2,2027-02-20,2027-11-20,Reserved,255.50,Academic Year 2027
+50003,9003,Example,Resident Three,three@example.com,2005-07-21,S9003,Harbour Hall,HH-202,Twin Room,2,2027-02-20,2027-11-20,Reserved,255.50,Academic Year 2027
+50004,9004,Example,Resident Four,four@example.com,2006-01-09,S9004,Harbour Hall,HH-203,Studio,1,2027-02-20,2027-11-20,Cancelled,410.00,Academic Year 2027

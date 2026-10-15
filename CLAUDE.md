@@ -22,9 +22,24 @@ Fill this in once. A worker with context knows. A worker without it guesses.
 
 | When the operator asks for... | Use this |
 |---|---|
-| <!-- TODO(author): one row per slash command --> | `/...` |
+| What needs attention, what is overdue | `/attention` |
+| The Monday review | `/weekly-review` |
+| Who is in, who arrives, who leaves | `/residents`, `/arrivals`, `/departures` |
+| A free room for some dates | `/vacancies` |
+| Offer, disclose, sign, assign, check in or out | `/offer`, `/disclose`, `/sign`, `/assign`, `/check-in`, `/check-out` |
+| Someone is worried about a resident | `/raise-concern`, then `/open-plan` if high risk |
+| An RA saw a resident | `/log-check` |
+| Welfare plan reviews | `/welfare`, `/review-plan` |
+| Going into a room | `/draft-entry-notice`, then `/log-entry` |
+| Something is broken | `/report-repair`, `/resolve-repair` |
+| A complaint | `/log-complaint`, `/resolve-complaint` |
+| Fees and arrears | `/bill-fees`, `/pay`, `/arrears`, `/draft-arrears-letter` |
+| Are we meeting the Code | `/compliance` |
+| Bring StarRez data across | `/import` |
+| Change a field, rule or stage | `/customise` |
+| A new page to look at | `/new-view` |
 
-If an ask fits nothing here, run the CLI directly (`npm run <cli> -- --help`) and then propose a new command for it.
+If an ask fits nothing here, run the CLI directly (`npm run accom -- help`) and then propose a new command for it.
 
 ## Hard rules
 
@@ -32,6 +47,9 @@ If an ask fits nothing here, run the CLI directly (`npm run <cli> -- --help`) an
 - Never delete records without an explicit yes in this session. Prefer marking closed or archived.
 - Never invent a record. If a name is ambiguous, list the candidates and ask.
 - The database is the source of truth. If the answer is not in it, say so.
+- Welfare records (concerns, plans, checks) are staff-only. Never put them in a draft to a resident, a guardian or anyone outside the welfare team without an explicit yes.
+- If someone is in immediate danger, the operator calls 111 first. Records come after.
+- Never record a disclosure, signing or check date the operator has not confirmed.
 
 ## Where things live
 

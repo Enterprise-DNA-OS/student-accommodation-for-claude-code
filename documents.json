@@ -1,11 +1,32 @@
 [
   {
-    "name": "example",
-    "title": "TODO(author): the first document this industry must produce",
-    "for_each": "select gen_random_uuid() as id, 'Example' as name",
+    "name": "resident-statement",
+    "title": "Accommodation statement",
+    "for_each": "select c.id, r.name || ' ' || c.term as label from contracts c join residents r on r.id = c.resident_id where c.status = 'signed' order by r.name",
+    "file": "label",
+    "sections": [
+      { "title": "Your stay", "sql": "select r.name as resident, c.term, b.name as building, rm.name as room, c.starts_on, c.ends_on from contracts c join residents r on r.id = c.resident_id left join rooms rm on rm.id = c.room_id left join buildings b on b.id = rm.building_id where c.id = $1" },
+      { "title": "Charges", "sql": "select due_on, description, amount_cents, (select value from settings where key = 'currency') as currency from charges where contract_id = $1 order by due_on, id" },
+      { "title": "Payments received", "sql": "select received_on, reference, amount_cents, (select value from settings where key = 'currency') as currency from payments where contract_id = $1 order by received_on" },
+      { "title": "Balance", "note": "Charges due to today less payments received.", "sql": "select due_cents, paid_cents, balance_cents, (select value from settings where key = 'currency') as currency from balances where contract_id = $1" }
+    ]
+  },
+  {
+    "name": "complaints-log",
+    "title": "Complaints log",
+    "for_each": "select id, name from buildings order by name",
     "file": "name",
     "sections": [
-      { "title": "Details", "sql": "select 'replace me' as item, $1::text as record_id" }
+      { "title": "Complaints received", "note": "Kept and made available to residents under clause 31(5) of the Pastoral Care Code. Names are left off.", "sql": "select received_on, summary, case when code_related then 'Yes' else 'No' end as about_the_code, coalesce(response, 'Open') as response, resolved_on from complaints where building_id = $1 order by received_on desc" }
+    ]
+  },
+  {
+    "name": "evacuation-roll",
+    "title": "Evacuation roll",
+    "for_each": "select id, name from buildings order by name",
+    "file": "name",
+    "sections": [
+      { "title": "Residents in the building today", "note": "Print before a drill or an emergency. Under-18 residents are marked so their guardian is contacted (clause 27(1)(c)(iii)).", "sql": "select rm.floor, rm.name as room, lc.resident, case when r.date_of_birth > (current_date - interval '18 years')::date then 'Under 18' else '' end as note, coalesce(r.phone, '') as phone, coalesce(r.emergency_contact, '') as emergency_contact from live_contracts lc join rooms rm on rm.id = lc.room_id join residents r on r.id = lc.resident_id where rm.building_id = $1 order by rm.floor, rm.name, lc.resident" }
     ]
   }
 ]

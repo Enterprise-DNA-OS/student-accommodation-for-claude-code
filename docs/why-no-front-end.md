@@ -1,24 +1,25 @@
 # Why there is no front end
 
-StarRez is a database with a subscription. The tables underneath it are ordinary: a few entities, a few relationships, a handful of workflows you repeat every week. What you pay for is the layer on top that lets people who do not write SQL get at those tables. Screens, filters, dashboards, forms.
+StarRez is a database with a subscription. Underneath sit ordinary records: buildings, rooms, residents, bookings, charges, incidents. What the subscription pays for is the layer on top that lets staff without database skills reach those records: screens, a resident portal, dashboards, forms.
 
-That layer used to be the whole product, because talking to a database was hard. It is not hard any more. Open this folder in Claude Code, describe what you want, and it writes the query, runs it, and explains the answer. Ask a question the dashboard never had a chart for and you still get an answer.
+That layer used to be the whole product, because talking to a database was hard. It is not hard any more. Open this folder in Claude Code, ask "who has not been seen this week?" or "which rooms are free from February?", and it runs the right command and explains the answer.
 
 ## What you gain
 
-- **Better answers.** A dashboard shows what the vendor decided to chart. Here you ask your own question, in your own words, and get it answered against your own data.
-- **No seats.** Everyone who needs to look can look. The bill does not grow with headcount.
-- **Your data in your Postgres.** Plain tables. Back them up, query them from anything, leave any time. There is no export step because there is nothing to leave.
-- **A process that matches you.** When your way of working changes, you add a command. You do not wait for a feature request to clear.
+- **Answers the dashboard never had.** Who signed before they had the house rules. Which at-risk resident has no plan. Which routine room entry had six hours' notice.
+- **No per-bed or per-module bill.** The free version has no licence fee as the hall grows.
+- **Your records in your own database.** Back them up, query them from anything, leave any time.
+- **Rules you can read.** The Code checks are listed in `docs/compliance.md` with the clause beside each one.
 
-## What you give up
+## What a screen gives that this does not
 
-- **A visual board.** Stages are a table you ask about, not cards you drag.
-- **A phone app.** It runs where Claude Code runs.
-- **A vendor help desk.** This is open source. Enterprise DNA supports the installed version for businesses that want someone to call.
+- **A resident portal.** Applications, room selection and payments online. Here, staff enter what residents send in, or import it.
+- **A phone app for resident assistants.** Here, an RA logs checks where Claude Code runs, or tells a staff member who logs them.
+- **Card payments.** This records payments; it does not take them.
+- **A help desk at the vendor.** This is open source. Enterprise DNA supports the installed version for providers who want someone to call.
 
 ## Who this fits
 
-Small teams who already use Claude Code, or who would rather learn to ask than learn another interface. If your team needs a screen to look at all day, keep StarRez. If you need the answers more than the screens, this is cheaper, faster and yours.
+A hall, a private student house or a boarding operator with a small residential life team who would rather ask than click. If you need a resident portal, Enterprise DNA builds one on top of the same records for your version.
 
 Installed and run for you: https://enterprisedna.co/omni/instead-of/starrez

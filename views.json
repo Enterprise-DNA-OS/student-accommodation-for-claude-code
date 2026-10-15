@@ -2,13 +2,33 @@
   {
     "name": "week",
     "title": "This week",
-    "subtitle": "Student Accommodation for Claude Code: what needs attention, rendered by npm run view",
+    "subtitle": "What needs attention across the residences, rendered by npm run view",
     "sections": [
-      {
-        "title": "Needs attention",
-        "note": "TODO(author): point this at the industry's attention view (overdue, stuck, quiet).",
-        "sql": "select 'replace me' as item, 'TODO(author)' as why"
-      }
+      { "title": "Code and house checks", "note": "Each line cites its rule in docs/compliance.md.", "sql": "select rule, subject, issue from compliance_issues order by rule, subject" },
+      { "title": "Welfare due", "sql": "select resident, item, due_on, coalesce(owner, '') as owner from welfare_due order by due_on" },
+      { "title": "Arriving in the next three weeks", "sql": "select resident, building, room, term, starts_on, status from arrivals order by starts_on" },
+      { "title": "Leaving in the next three weeks", "sql": "select resident, building, room, ends_on from departures order by ends_on" },
+      { "title": "Fees overdue", "sql": "select resident, term, balance_cents, days_overdue, (select value from settings where key = 'currency') as currency from arrears order by days_overdue desc" }
+    ]
+  },
+  {
+    "name": "occupancy",
+    "title": "Occupancy",
+    "subtitle": "Beds, residents and vacancies by building",
+    "sections": [
+      { "title": "By building", "sql": "select building, beds, offline, occupied, vacant, occupancy_pct from occupancy order by building" },
+      { "title": "Rooms with a free bed today", "sql": "select b.name as building, rm.name as room, rm.room_type as type, rm.beds - (select count(*) from live_contracts lc where lc.room_id = rm.id)::int as free_beds from rooms rm join buildings b on b.id = rm.building_id where rm.offline_reason is null and rm.beds > (select count(*) from live_contracts lc where lc.room_id = rm.id) order by b.name, rm.name" },
+      { "title": "Rooms offline", "sql": "select b.name as building, rm.name as room, rm.offline_reason as reason from rooms rm join buildings b on b.id = rm.building_id where rm.offline_reason is not null order by b.name, rm.name" }
+    ]
+  },
+  {
+    "name": "welfare",
+    "title": "Welfare board",
+    "subtitle": "Open concerns, plans and who has not been seen. Staff only.",
+    "sections": [
+      { "title": "Open concerns", "sql": "select r.name as resident, c.reported_on, c.category, c.risk, c.summary from concerns c join residents r on r.id = c.resident_id where c.closed_on is null order by c.risk = 'high' desc, c.reported_on" },
+      { "title": "Open welfare plans", "sql": "select r.name as resident, p.owner, p.review_on, p.summary from welfare_plans p join residents r on r.id = p.resident_id where p.closed_on is null order by p.review_on" },
+      { "title": "Days since last check", "sql": "select resident, building, room, last_check, days_since_check from residents_now order by days_since_check desc" }
     ]
   }
 ]
